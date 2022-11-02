@@ -1,27 +1,12 @@
-const express = require('express')
-require('dotenv').config()
-const postgres = require('@metamodules/postgres')()
+// set express js
+const express = require("express");
+const authRoute = require("../routes/auth");
 
-const app = express()
-const port = 4000
+// initialize express and set port
+const app = express();
+const port = process.env.API_PORT;
+app.listen(port, () => console.log(`API Server is listening on port ${port}!`));
 
-postgres.query(`CREATE TABLE IF NOT EXISTS clicks (
-  id BIGSERIAL PRIMARY KEY,
-  created_at TIMESTAMP DEFAULT NOW()
-)`)
-
-app.get('/api/count', (req, res) => {
-  postgres.query('SELECT count(*) AS count FROM clicks', (err, resp) => {
-    res.send({ count: resp.rows[0].count || 0 })
-  })
-})
-
-app.post('/api/count/increment', (req, res) => {
-  postgres.query('INSERT INTO clicks DEFAULT VALUES', (err, insert) => {
-    postgres.query('SELECT count(*) AS count FROM clicks', (err, resp) => {
-      res.send({ count: resp.rows[0].count || 0 })
-    })
-  })
-})
-
-app.listen(port, () => console.log(`Example backend API listening on port ${port}!`))
+app.use(authRoute);
+// import env  - keep in mind to comment dev_api.sh scripts to prevent overwrite in docket images while debugging
+require("dotenv").config();
