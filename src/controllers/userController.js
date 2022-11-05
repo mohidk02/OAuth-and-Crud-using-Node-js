@@ -38,12 +38,8 @@ exports.register = async (req, res) => {
     const token = jwt.sign({ userid: user.id, email }, process.env.API_TOKEN, {
       expiresIn: "2h",
     });
-    // save user token
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 3600000,
-    });
+    //save user token
+    res.setHeader("Set-Cookie", token);
 
     // return new user
     res.json(user).status(201);
@@ -75,12 +71,8 @@ exports.login = async (req, res) => {
         }
       );
 
-      // save user token
-      res.cookie("jwt", token, {
-        httpOnly: true,
-        secure: true,
-        maxAge: 3600000,
-      });
+      //save user token
+      res.setHeader("Set-Cookie", ["jwt=" + token]);
 
       // user
       res.json(user).status(200);
