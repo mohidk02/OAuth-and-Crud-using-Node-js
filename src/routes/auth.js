@@ -5,7 +5,7 @@ const auth = require("../middleware/auth");
 const userController = require("../controllers/userController");
 const postsController = require("../controllers/postsController");
 
-// express is no more bundled with body parser so we need to inclue body-parser
+// express is no more bundled with body parser so we need to include body-parser
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 

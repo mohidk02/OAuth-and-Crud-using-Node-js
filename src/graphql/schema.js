@@ -5,12 +5,14 @@ type User {
     id: ID!
     name: String!
     email: String!
-    password: String
+    password: String!
+    gender: String
 }
 input UserInputData {
     email: String!
     name: String!
     password: String!
+    gender: String!
 }
 type RootMutation {
     createUser(userInput: UserInputData): User!

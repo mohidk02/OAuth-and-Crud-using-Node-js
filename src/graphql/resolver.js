@@ -27,14 +27,16 @@ module.exports = {
     const user = new users({
       login: userInput.email,
       name: userInput.name,
-      password: hashPw,
+      pass: hashPw,
+      gender: userInput.gender,
     });
     const createUser = await user.save();
     return {
       ...createUser._doc,
       id: createUser.userid,
       email: createUser.login,
-      password: createUser.pass,
+      password: userInput.password,
+      gender: createUser.gender,
     };
   },
 };

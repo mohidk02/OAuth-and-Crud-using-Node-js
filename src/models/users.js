@@ -1,6 +1,11 @@
 const { con } = require("../boot/databaseConnection");
 const { DataTypes } = require("sequelize");
 
+const genders = {
+  male: "male",
+  female: "female",
+};
+
 // define users model
 const users = con.define("byt_users", {
   userid: {
@@ -21,6 +26,9 @@ const users = con.define("byt_users", {
   },
   pass: {
     type: DataTypes.TEXT,
+  },
+  gender: {
+    type: DataTypes.ENUM(Object.values(genders)),
   },
 });
 
